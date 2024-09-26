@@ -6,6 +6,7 @@ from datasets import DatasetDict
 
 from .artifact import fetch_artifact
 from .dataset_utils import get_dataset_artifact
+from .inference import LogProbInferenceEngine
 from .logging_utils import get_logger
 from .metric_utils import _compute, _inference_post_process
 from .operator import SourceOperator
@@ -145,6 +146,10 @@ def infer(
     dataset = produce(instance_or_instances, dataset_query, **kwargs)
     engine, _ = fetch_artifact(engine)
     if return_log_probs:
+        assert isinstance(engine, LogProbInferenceEngine), (
+            f"Error in infer: return_log_probs set to True but supplied engine "
+            f"{engine.__class__.__name__} does not support logprobs."
+        )
         raw_predictions = engine.infer_log_probs(dataset)
         raw_predictions = [
             json.dumps(raw_prediction) for raw_prediction in raw_predictions
