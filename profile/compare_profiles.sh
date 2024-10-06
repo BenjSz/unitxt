@@ -17,3 +17,4 @@ echo "Main branch net runtime (multiplied by 1000 to become an integer): $RC2"
 echo "ratio of net times:  new_branch / main_branch is the following:"
 echo "scale = 3; $RC1/$RC2" | bc
 mv logs/benchmark_cards.prof logs/benchmark_cards_main.prof
+cd ..
