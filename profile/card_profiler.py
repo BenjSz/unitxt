@@ -24,8 +24,8 @@ class CardProfiler:
     from unitxt root dir, run the following linux commands:
 
     (pip install snakeviz)
-    python -m cProfile -o profile/logs/name_reflecting_parameters.prof profile/card_profiler.py
-    snakeviz profile/logs/name_reflecting_parameters.prof
+    python -m profile.card_profiler
+    snakeviz profile/logs/benchmark_cards.prof
 
     A browser window will open with all time-details. See here how to explore these details:
     see https://jiffyclub.github.io/snakeviz/
@@ -100,7 +100,9 @@ def main_from_cards():
 
 
 if __name__ == "__main__":
-    cProfile.run("main_from_cards()", "logs/benchmark_cards.prof")
+    cProfile.run(
+        "main_from_cards()", "logs/benchmark_cards.prof"
+    )  # can change here to the other main_from_
     f = StringIO()
     pst = pstats.Stats("logs/benchmark_cards.prof", stream=f)
     pst.strip_dirs()
